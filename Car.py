@@ -79,7 +79,7 @@ def main():
     while True:
         try:
             data = input("Command ")
-            print "Data: %s"%data
+            print("Data: %d" % (data))
             if data == 0:
                 print("fordward")
                 car.fordward(speed)
@@ -87,14 +87,19 @@ def main():
                 print("backward")
                 car.backward(speed)
             if data == 2:
+                print("left")
                 car.left(speed)
             if data == 3:
+                print("right")
                 car.right(speed)
             if data == 4:
+                print("speed")
                 speed = input("Speed ")
             if data == 5:
+                print("stop")
                 car.stop()
             if data == 6:
+                print("wheels")
                 wheel = input("Specify wheel 0 1 2 3")
                 car.spin(wheel, speed)
         except KeyboardInterrupt:
