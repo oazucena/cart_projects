@@ -35,11 +35,11 @@ def main():
     print("Connecting to Client")
     client = connectToClient(socket)
     client.send("hello!!\r\n")
-    
+
     wheels = {"top_right":{"name":"top_right","e":32,"f":24,"r":26},\
-            "bottom_left":{"name":"bottom_left", "e":22,"f":18,"r":16},\
-            "bottom_right":{"name":"bottom_right", "e":19,"f":21,"r":23},\
-            "top_left":{"name":"top_left", "e":11,"f":13,"r":15}}
+            "top_left":{"name":"top_left", "e":19,"f":23,"r":21},\
+            "bottom_right":{"name":"bottom_right", "e":22,"f":18,"r":16},\
+            "bottom_left":{"name":"bottom_left", "e":11,"f":15,"r":13}}
     car = OmniCar(wheels)
     speed = 30
     while True:
@@ -79,4 +79,4 @@ if __name__ == '__main__':
     print("starting encoder main")
     main()
     G.cleanup()
-    print("Closing program")
+    print("Closing encoder")
