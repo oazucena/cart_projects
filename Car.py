@@ -78,7 +78,7 @@ def main():
     speed = 50
     while True:
         try:
-            data = input("Command ")
+            data = int(input("Command "))
             print("Data: %d" % (data))
             if data == 0:
                 print("fordward")
