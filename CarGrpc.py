@@ -1,5 +1,6 @@
 import bluetooth
 import Car as Car
+import gyro as GY
 import RPi.GPIO as G
 from concurrent import futures
 import logging
@@ -9,11 +10,13 @@ import grpc
 
 from random import gauss
 
-import grpc_test_server.car_pb2 as car_pb2
-import grpc_test_server.car_pb2_grpc as car_pb2_grpc
+import grpc_car_files.car_pb2 as car_pb2
+import grpc_car_files.car_pb2_grpc as car_pb2_grpc
 
 import queue
 import time
+
+import complementary_filter as CFF
 
 G.setmode(G.BOARD)
 
@@ -80,17 +83,21 @@ class CarServer(car_pb2_grpc.CarServicer):
                 yield item
         print("Stop state")
 
-def generateAccelerations():
+def readAccelerations(device):
     while True:
-        acceleration = car_pb2.Acceleration(x=10, y=gauss(10,2), z=10)
+        data = device.readData()
+        acceleration = car_pb2.Acceleration(x=data[3], y=data[4], z=data[5])
         state_info = car_pb2.CarStateInfo(acceleration=acceleration)
         q.put(state_info)
         time.sleep(.05)
+
 def serve():
+    device = GY.GY521()
+    CF = CFF.ComplementaryFilter(device, 0.1)
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     car_pb2_grpc.add_CarServicer_to_server(CarServer(), server)
     server.add_insecure_port('[::]:50051')
-    threading.Thread(target=generateAccelerations, daemon=True).start()
+    threading.Thread(target=readAccelerations, args=(CF,), daemon=True).start()
     print("Start server")
     server.start()
     server.wait_for_termination()
