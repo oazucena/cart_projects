@@ -20,15 +20,10 @@ class CarStub(object):
                 request_serializer=car__pb2.DirectionRequest.SerializeToString,
                 response_deserializer=car__pb2.DirectionReply.FromString,
                 )
-        self.state = channel.unary_stream(
+        self.state = channel.stream_stream(
                 '/omicron.Car/state',
-                request_serializer=car__pb2.Empty.SerializeToString,
-                response_deserializer=car__pb2.CarStateInfo.FromString,
-                )
-        self.change = channel.stream_unary(
-                '/omicron.Car/change',
                 request_serializer=car__pb2.CarStateInfoStatus.SerializeToString,
-                response_deserializer=car__pb2.Empty.FromString,
+                response_deserializer=car__pb2.CarStateInfo.FromString,
                 )
 
 
@@ -43,13 +38,7 @@ class CarServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def state(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def change(self, request_iterator, context):
+    def state(self, request_iterator, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -63,15 +52,10 @@ def add_CarServicer_to_server(servicer, server):
                     request_deserializer=car__pb2.DirectionRequest.FromString,
                     response_serializer=car__pb2.DirectionReply.SerializeToString,
             ),
-            'state': grpc.unary_stream_rpc_method_handler(
+            'state': grpc.stream_stream_rpc_method_handler(
                     servicer.state,
-                    request_deserializer=car__pb2.Empty.FromString,
-                    response_serializer=car__pb2.CarStateInfo.SerializeToString,
-            ),
-            'change': grpc.stream_unary_rpc_method_handler(
-                    servicer.change,
                     request_deserializer=car__pb2.CarStateInfoStatus.FromString,
-                    response_serializer=car__pb2.Empty.SerializeToString,
+                    response_serializer=car__pb2.CarStateInfo.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -102,7 +86,7 @@ class Car(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def state(request,
+    def state(request_iterator,
             target,
             options=(),
             channel_credentials=None,
@@ -112,25 +96,8 @@ class Car(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/omicron.Car/state',
-            car__pb2.Empty.SerializeToString,
-            car__pb2.CarStateInfo.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def change(request_iterator,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.stream_unary(request_iterator, target, '/omicron.Car/change',
+        return grpc.experimental.stream_stream(request_iterator, target, '/omicron.Car/state',
             car__pb2.CarStateInfoStatus.SerializeToString,
-            car__pb2.Empty.FromString,
+            car__pb2.CarStateInfo.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -61,27 +61,38 @@ class CarServer(car_pb2_grpc.CarServicer):
             car.stop()
         return car_pb2.DirectionReply(message='Direction {}, Speed {}!'.format(car_pb2.Direction.Name(request.direction), request.speed))
 
-    def change(self, request_iterator, context):
-        global return_data
-        while context.is_active():
-            print("Start Status")
-            status = next(request_iterator)
-            print("Status:{}".format(status)) 
-            if status.state == car_pb2.CarStateInfoStatus.CarState.STOP:
-                return_data = False
-            else:
-                return_data = True
-            print("Return Data: {}".format(return_data))
-        print("Stop change")
-
     def state(self, request_iterator, context):
-        print("Start State") 
-        while context.is_active(): 
+        print("Start State")
+        global stop_stream
+        run_event = threading.Event()
+        run_event.set()
+        def status() :
+            global stop_stream
+            global return_data
+            while True:
+                time.sleep(0.1)
+                request = next(request_iterator)
+                if request.state == car_pb2.CarStateInfoStatus.CarState.STOP or stop_stream:
+                    run_event.clear()
+                    return_data = False
+                    stop_stream = True
+                    print("Stopping status")
+                    return
+                else:
+                    return_data = True
+
+        stop_stream = False
+        status_thread = threading.Thread(target = status)
+        status_thread.start()
+        while run_event.is_set():
             item = q.get(block=True, timeout=1)
             q.task_done()
             if return_data:
                 yield item
+        print("Stopping waiting for status thread")
+        status_thread.join()
         print("Stop state")
+
 
 def readAccelerations(device):
     while True:

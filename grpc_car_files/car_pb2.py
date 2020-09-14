@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\n\023io.grpc.omicron.carB\016CarServerProtoP\001\242\002\003HLW',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\tcar.proto\x12\x07omicron\"\x07\n\x05\x45mpty\"H\n\x10\x44irectionRequest\x12\r\n\x05speed\x18\x01 \x01(\x05\x12%\n\tdirection\x18\x02 \x01(\x0e\x32\x12.omicron.Direction\"/\n\x0c\x41\x63\x63\x65leration\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\";\n\x0c\x43\x61rStateInfo\x12+\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x15.omicron.Acceleration\"j\n\x12\x43\x61rStateInfoStatus\x12\x33\n\x05state\x18\x01 \x01(\x0e\x32$.omicron.CarStateInfoStatus.CarState\"\x1f\n\x08\x43\x61rState\x12\t\n\x05START\x10\x00\x12\x08\n\x04STOP\x10\x01\"!\n\x0e\x44irectionReply\x12\x0f\n\x07message\x18\x01 \x01(\t*E\n\tDirection\x12\x0b\n\x07\x46ORWARD\x10\x00\x12\x0c\n\x08\x42\x41\x43KWARD\x10\x01\x12\x08\n\x04LEFT\x10\x02\x12\t\n\x05RIGHT\x10\x03\x12\x08\n\x04STOP\x10\x04\x32\xb7\x01\n\x03\x43\x61r\x12\x41\n\tdirection\x12\x19.omicron.DirectionRequest\x1a\x17.omicron.DirectionReply\"\x00\x12\x32\n\x05state\x12\x0e.omicron.Empty\x1a\x15.omicron.CarStateInfo\"\x00\x30\x01\x12\x39\n\x06\x63hange\x12\x1b.omicron.CarStateInfoStatus\x1a\x0e.omicron.Empty\"\x00(\x01\x42-\n\x13io.grpc.omicron.carB\x0e\x43\x61rServerProtoP\x01\xa2\x02\x03HLWb\x06proto3'
+  serialized_pb=b'\n\tcar.proto\x12\x07omicron\"H\n\x10\x44irectionRequest\x12\r\n\x05speed\x18\x01 \x01(\x05\x12%\n\tdirection\x18\x02 \x01(\x0e\x32\x12.omicron.Direction\"/\n\x0c\x41\x63\x63\x65leration\x12\t\n\x01x\x18\x01 \x01(\x02\x12\t\n\x01y\x18\x02 \x01(\x02\x12\t\n\x01z\x18\x03 \x01(\x02\";\n\x0c\x43\x61rStateInfo\x12+\n\x0c\x61\x63\x63\x65leration\x18\x01 \x01(\x0b\x32\x15.omicron.Acceleration\"j\n\x12\x43\x61rStateInfoStatus\x12\x33\n\x05state\x18\x01 \x01(\x0e\x32$.omicron.CarStateInfoStatus.CarState\"\x1f\n\x08\x43\x61rState\x12\t\n\x05START\x10\x00\x12\x08\n\x04STOP\x10\x01\"!\n\x0e\x44irectionReply\x12\x0f\n\x07message\x18\x01 \x01(\t*E\n\tDirection\x12\x0b\n\x07\x46ORWARD\x10\x00\x12\x0c\n\x08\x42\x41\x43KWARD\x10\x01\x12\x08\n\x04LEFT\x10\x02\x12\t\n\x05RIGHT\x10\x03\x12\x08\n\x04STOP\x10\x04\x32\x8b\x01\n\x03\x43\x61r\x12\x41\n\tdirection\x12\x19.omicron.DirectionRequest\x1a\x17.omicron.DirectionReply\"\x00\x12\x41\n\x05state\x12\x1b.omicron.CarStateInfoStatus\x1a\x15.omicron.CarStateInfo\"\x00(\x01\x30\x01\x42-\n\x13io.grpc.omicron.carB\x0e\x43\x61rServerProtoP\x01\xa2\x02\x03HLWb\x06proto3'
 )
 
 _DIRECTION = _descriptor.EnumDescriptor(
@@ -58,8 +58,8 @@ _DIRECTION = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=358,
-  serialized_end=427,
+  serialized_start=349,
+  serialized_end=418,
 )
 _sym_db.RegisterEnumDescriptor(_DIRECTION)
 
@@ -91,35 +91,10 @@ _CARSTATEINFOSTATUS_CARSTATE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=290,
-  serialized_end=321,
+  serialized_start=281,
+  serialized_end=312,
 )
 _sym_db.RegisterEnumDescriptor(_CARSTATEINFOSTATUS_CARSTATE)
-
-
-_EMPTY = _descriptor.Descriptor(
-  name='Empty',
-  full_name='omicron.Empty',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=22,
-  serialized_end=29,
-)
 
 
 _DIRECTIONREQUEST = _descriptor.Descriptor(
@@ -156,8 +131,8 @@ _DIRECTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=31,
-  serialized_end=103,
+  serialized_start=22,
+  serialized_end=94,
 )
 
 
@@ -202,8 +177,8 @@ _ACCELERATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=105,
-  serialized_end=152,
+  serialized_start=96,
+  serialized_end=143,
 )
 
 
@@ -234,8 +209,8 @@ _CARSTATEINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=154,
-  serialized_end=213,
+  serialized_start=145,
+  serialized_end=204,
 )
 
 
@@ -267,8 +242,8 @@ _CARSTATEINFOSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=215,
-  serialized_end=321,
+  serialized_start=206,
+  serialized_end=312,
 )
 
 
@@ -299,15 +274,14 @@ _DIRECTIONREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=323,
-  serialized_end=356,
+  serialized_start=314,
+  serialized_end=347,
 )
 
 _DIRECTIONREQUEST.fields_by_name['direction'].enum_type = _DIRECTION
 _CARSTATEINFO.fields_by_name['acceleration'].message_type = _ACCELERATION
 _CARSTATEINFOSTATUS.fields_by_name['state'].enum_type = _CARSTATEINFOSTATUS_CARSTATE
 _CARSTATEINFOSTATUS_CARSTATE.containing_type = _CARSTATEINFOSTATUS
-DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.message_types_by_name['DirectionRequest'] = _DIRECTIONREQUEST
 DESCRIPTOR.message_types_by_name['Acceleration'] = _ACCELERATION
 DESCRIPTOR.message_types_by_name['CarStateInfo'] = _CARSTATEINFO
@@ -315,13 +289,6 @@ DESCRIPTOR.message_types_by_name['CarStateInfoStatus'] = _CARSTATEINFOSTATUS
 DESCRIPTOR.message_types_by_name['DirectionReply'] = _DIRECTIONREPLY
 DESCRIPTOR.enum_types_by_name['Direction'] = _DIRECTION
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
-
-Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
-  'DESCRIPTOR' : _EMPTY,
-  '__module__' : 'car_pb2'
-  # @@protoc_insertion_point(class_scope:omicron.Empty)
-  })
-_sym_db.RegisterMessage(Empty)
 
 DirectionRequest = _reflection.GeneratedProtocolMessageType('DirectionRequest', (_message.Message,), {
   'DESCRIPTOR' : _DIRECTIONREQUEST,
@@ -368,8 +335,8 @@ _CAR = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=430,
-  serialized_end=613,
+  serialized_start=421,
+  serialized_end=560,
   methods=[
   _descriptor.MethodDescriptor(
     name='direction',
@@ -386,18 +353,8 @@ _CAR = _descriptor.ServiceDescriptor(
     full_name='omicron.Car.state',
     index=1,
     containing_service=None,
-    input_type=_EMPTY,
-    output_type=_CARSTATEINFO,
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-  ),
-  _descriptor.MethodDescriptor(
-    name='change',
-    full_name='omicron.Car.change',
-    index=2,
-    containing_service=None,
     input_type=_CARSTATEINFOSTATUS,
-    output_type=_EMPTY,
+    output_type=_CARSTATEINFO,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

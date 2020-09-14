@@ -35,12 +35,7 @@ enum Direction {
 service Car {
   // Sends a greeting
   rpc direction (DirectionRequest) returns (DirectionReply) {}
-  rpc state(Empty) returns (stream CarStateInfo) {}
-  rpc change(stream CarStateInfoStatus) returns (Empty) {}
-}
-
-message Empty {
-
+  rpc state(stream CarStateInfoStatus) returns (stream CarStateInfo) {}
 }
 
 message DirectionRequest{
