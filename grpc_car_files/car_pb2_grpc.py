@@ -20,10 +20,15 @@ class CarStub(object):
                 request_serializer=car__pb2.DirectionRequest.SerializeToString,
                 response_deserializer=car__pb2.DirectionReply.FromString,
                 )
-        self.state = channel.stream_stream(
+        self.state = channel.unary_stream(
                 '/omicron.Car/state',
-                request_serializer=car__pb2.CarStateInfoStatus.SerializeToString,
+                request_serializer=car__pb2.Empty.SerializeToString,
                 response_deserializer=car__pb2.CarStateInfo.FromString,
+                )
+        self.stop = channel.unary_unary(
+                '/omicron.Car/stop',
+                request_serializer=car__pb2.Empty.SerializeToString,
+                response_deserializer=car__pb2.Empty.FromString,
                 )
 
 
@@ -38,7 +43,13 @@ class CarServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def state(self, request_iterator, context):
+    def state(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def stop(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -52,10 +63,15 @@ def add_CarServicer_to_server(servicer, server):
                     request_deserializer=car__pb2.DirectionRequest.FromString,
                     response_serializer=car__pb2.DirectionReply.SerializeToString,
             ),
-            'state': grpc.stream_stream_rpc_method_handler(
+            'state': grpc.unary_stream_rpc_method_handler(
                     servicer.state,
-                    request_deserializer=car__pb2.CarStateInfoStatus.FromString,
+                    request_deserializer=car__pb2.Empty.FromString,
                     response_serializer=car__pb2.CarStateInfo.SerializeToString,
+            ),
+            'stop': grpc.unary_unary_rpc_method_handler(
+                    servicer.stop,
+                    request_deserializer=car__pb2.Empty.FromString,
+                    response_serializer=car__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,7 +102,7 @@ class Car(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def state(request_iterator,
+    def state(request,
             target,
             options=(),
             channel_credentials=None,
@@ -96,8 +112,25 @@ class Car(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/omicron.Car/state',
-            car__pb2.CarStateInfoStatus.SerializeToString,
+        return grpc.experimental.unary_stream(request, target, '/omicron.Car/state',
+            car__pb2.Empty.SerializeToString,
             car__pb2.CarStateInfo.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def stop(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/omicron.Car/stop',
+            car__pb2.Empty.SerializeToString,
+            car__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

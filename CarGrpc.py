@@ -38,60 +38,44 @@ wheels = {"top_right":{"name":"top_right","e":32,"f":24,"r":26},\
             "bottom_right":{"name":"bottom_right", "e":22,"f":18,"r":16},\
             "bottom_left":{"name":"bottom_left", "e":11,"f":15,"r":13}}
 car = OmniCar(wheels)
-q = queue.Queue()
+q = queue.Queue(10)
 stop_stream = False
 return_data = True
 class CarServer(car_pb2_grpc.CarServicer):
-    
+    def __init__(self):
+        self.stop_stream = True
+
     def direction(self, request, context):
         print("request {}".format(request))
         if request.direction == car_pb2.Direction.FORWARD:
             car.fordward(request.speed)
-        if request.direction == car_pb2.Direction.BACKWARD:
+        elif request.direction == car_pb2.Direction.BACKWARD:
             print("Backward")
             car.backward(request.speed) 
-        if request.direction == car_pb2.Direction.RIGHT:
+        elif request.direction == car_pb2.Direction.RIGHT:
             print("Right")
             car.right(request.speed) 
-        if request.direction == car_pb2.Direction.LEFT:
+        elif request.direction == car_pb2.Direction.LEFT:
             print("Left")
             car.left(request.speed)   
-        if request.direction == car_pb2.Direction.STOP:
+        elif request.direction == car_pb2.Direction.STOP:
             print("Stop")
             car.stop()
         return car_pb2.DirectionReply(message='Direction {}, Speed {}!'.format(car_pb2.Direction.Name(request.direction), request.speed))
 
-    def state(self, request_iterator, context):
-        print("Start State")
-        global stop_stream
-        run_event = threading.Event()
-        run_event.set()
-        def status() :
-            global stop_stream
-            global return_data
-            while True:
-                time.sleep(0.1)
-                request = next(request_iterator)
-                if request.state == car_pb2.CarStateInfoStatus.CarState.STOP or stop_stream:
-                    run_event.clear()
-                    return_data = False
-                    stop_stream = True
-                    print("Stopping status")
-                    return
-                else:
-                    return_data = True
+    def stop(self, request, context):
+        print("stop stream")
+        self.stop_stream = True
+        return car_pb2.Empty()
 
-        stop_stream = False
-        status_thread = threading.Thread(target = status)
-        status_thread.start()
-        while run_event.is_set():
+    def state(self, request_iterator, context):
+        self.stop_stream = False
+        print("Start Stream")
+        while not self.stop_stream and context.is_active():
             item = q.get(block=True, timeout=1)
             q.task_done()
-            if return_data:
-                yield item
-        print("Stopping waiting for status thread")
-        status_thread.join()
-        print("Stop state")
+            yield item
+        print("Stop State")
 
 
 def readAccelerations(device):
